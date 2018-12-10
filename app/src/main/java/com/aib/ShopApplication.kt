@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import com.aib.di.DaggerAppComponent
 import com.aib.di.Injection
+import com.aib.view.activity.BaseActivity
 import com.blankj.utilcode.util.Utils
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -18,7 +19,7 @@ import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-class ShopApplication @Inject constructor() : Application(), HasActivityInjector {
+class ShopApplication : Application(), HasActivityInjector {
     @Inject
     lateinit var injector: DispatchingAndroidInjector<Activity>
 
@@ -56,12 +57,14 @@ class ShopApplication @Inject constructor() : Application(), HasActivityInjector
                 }
 
                 //注册fragment
-                if (activity is Injection) {
+                if (activity is BaseActivity<*>) {
                     val appCompatActivity = activity as AppCompatActivity
                     appCompatActivity.supportFragmentManager.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks() {
                         override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
                             super.onFragmentCreated(fm, f, savedInstanceState)
-                            AndroidSupportInjection.inject(f)
+                            if (f is Injection) {
+                                AndroidSupportInjection.inject(f)
+                            }
                         }
                     }, true)
                 }

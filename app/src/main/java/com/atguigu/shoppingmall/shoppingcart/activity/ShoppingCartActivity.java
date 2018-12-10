@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.shoppingmall.R;
-import com.atguigu.shoppingmall.app.MainActivity;
+import com.aib.view.activity.MainActivity;
 import com.atguigu.shoppingmall.shoppingcart.adapter.ShopCartAdapter;
 import com.atguigu.shoppingmall.home.bean.GoodsBean;
 import com.atguigu.shoppingmall.shoppingcart.utils.CartProvider;

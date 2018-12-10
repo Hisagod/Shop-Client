@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aib.viewmodel.HomeViewModel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.atguigu.shoppingmall.R;
@@ -33,6 +34,8 @@ import javax.inject.Inject;
 import okhttp3.Request;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
+    @Inject
+    public HomeViewModel vm;
     private ResultBean resultBean;
     private RecyclerView rvHome;
     private ImageView ib_top;
@@ -56,6 +59,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        vm.getHomeJson();
         //请求网络
 //        hlp
 //        getDataFromNet();

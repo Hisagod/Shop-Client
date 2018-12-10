@@ -1,4 +1,4 @@
-package com.atguigu.shoppingmall.app;
+package com.aib.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,10 +29,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private BaseFragment mContext;
 
     private void initFragment() {
-        vm.getHomeJson();
         fragments = new ArrayList<>();
         typeFragment = new TypeFragment();
-        fragments.add(new HomeFragment());
+        HomeFragment homeFragment = new HomeFragment();
+        fragments.add(homeFragment);
 //        fragments.add(typeFragment);
 //        fragments.add(new CommunityFragment());
 //        fragments.add(new ShoppingCartFragment());

@@ -1,6 +1,6 @@
 package com.aib.di
 
-import com.atguigu.shoppingmall.app.MainActivity
+import com.aib.view.activity.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
