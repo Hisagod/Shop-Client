@@ -19,7 +19,7 @@ import com.atguigu.shoppingmall.R;
 import com.atguigu.shoppingmall.databinding.FragmentHomeBinding;
 import com.atguigu.shoppingmall.home.adapter.HomeRecycleAdapter;
 import com.atguigu.shoppingmall.home.bean.ResultBean;
-import com.atguigu.shoppingmall.user.activity.MessageCenterActivity;
+import com.aib.view.activity.MsgActivity;
 import com.atguigu.shoppingmall.utils.Constants;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -141,7 +141,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         tv_message_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MessageCenterActivity.class);
+                Intent intent = new Intent(getContext(), MsgActivity.class);
                 getActivity().startActivity(intent);
             }
         });

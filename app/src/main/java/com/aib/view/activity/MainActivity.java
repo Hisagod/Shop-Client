@@ -5,13 +5,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
-import com.aib.view.activity.BaseActivity;
 import com.aib.view.fragment.BaseFragment;
 import com.aib.viewmodel.HomeViewModel;
 import com.atguigu.shoppingmall.R;
+import com.atguigu.shoppingmall.community.fragment.CommunityFragment;
 import com.atguigu.shoppingmall.databinding.ActivityMainBinding;
 import com.aib.view.fragment.HomeFragment;
+import com.atguigu.shoppingmall.shoppingcart.fragment.ShoppingCartFragment;
 import com.atguigu.shoppingmall.type.fragment.TypeFragment;
+import com.aib.view.fragment.UserFragment;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -31,12 +33,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private void initFragment() {
         fragments = new ArrayList<>();
         typeFragment = new TypeFragment();
-        HomeFragment homeFragment = new HomeFragment();
-        fragments.add(homeFragment);
+        fragments.add(new HomeFragment());
 //        fragments.add(typeFragment);
-//        fragments.add(new CommunityFragment());
-//        fragments.add(new ShoppingCartFragment());
-//        fragments.add(new UserFragment());
+        fragments.add(new CommunityFragment());
+        fragments.add(new ShoppingCartFragment());
+        fragments.add(new UserFragment());
     }
 
     private void initListener() {

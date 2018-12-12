@@ -41,8 +41,8 @@
         <activity android:name=".app.GoodsInfoActivity" />
         <activity android:name=".home.activity.GoodsListActivity"/>
         <activity android:name=".shoppingcart.activity.ShoppingCartActivity"/>
-        <activity android:name=".app.LoginActivity"/>
-        <activity android:name=".user.activity.MessageCenterActivity"/>
+        <activity android:name="com.aib.view.activity.LoginActivity"/>
+        <activity android:name="com.aib.view.activity.MsgActivity"/>
         <activity android:name=".app.CallCenterActivity"/>
     </application>
 

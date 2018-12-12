@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.ViewDataBinding;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
@@ -19,10 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aib.view.fragment.BaseFragment;
 import com.alipay.sdk.app.PayTask;
 import com.atguigu.shoppingmall.R;
 import com.aib.view.activity.MainActivity;
-import com.atguigu.shoppingmall.base.BaseFragment;
 import com.atguigu.shoppingmall.home.bean.GoodsBean;
 import com.atguigu.shoppingmall.shoppingcart.adapter.ShopCartAdapter;
 import com.atguigu.shoppingmall.shoppingcart.pay.PayResult;
@@ -30,6 +32,8 @@ import com.atguigu.shoppingmall.shoppingcart.pay.SignUtils;
 import com.atguigu.shoppingmall.shoppingcart.utils.CartProvider;
 import com.atguigu.shoppingmall.shoppingcart.utils.PayKeys;
 import com.atguigu.shoppingmall.utils.Constants;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -39,7 +43,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class ShoppingCartFragment extends BaseFragment {
+public class ShoppingCartFragment extends BaseFragment<ViewDataBinding> {
 
     private TextView tvShopcartEdit;
     private RecyclerView recyclerview;
@@ -83,24 +87,6 @@ public class ShoppingCartFragment extends BaseFragment {
         tvEmptyCartTobuy.setClickable(true);
     }
 
-
-    @Override
-    public View initView() {
-        View view = View.inflate(mContext, R.layout.fragment_shoppingcart, null);
-        findViews(view);
-        return view;
-    }
-
-    @Override
-    public void initData() {
-        initListener();
-        tvShopcartEdit.setTag(ACTION_EDIT);
-        tvShopcartEdit.setText("编辑");
-        llCheckAll.setVisibility(View.VISIBLE);
-        showData();
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -141,7 +127,7 @@ public class ShoppingCartFragment extends BaseFragment {
         tvEmptyCartTobuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, MainActivity.class);
+                Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
                 Constants.isBackHome = true;
             }
@@ -193,8 +179,8 @@ public class ShoppingCartFragment extends BaseFragment {
         if (datas != null && datas.size() > 0) {
             tvShopcartEdit.setVisibility(View.VISIBLE);
 
-            adapter = new ShopCartAdapter(mContext, datas, tvShopcartTotal, cartProvider, checkboxAll, cbAll);
-            recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+            adapter = new ShopCartAdapter(getContext(), datas, tvShopcartTotal, cartProvider, checkboxAll, cbAll);
+            recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerview.setAdapter(adapter);
             ll_empty_shopcart.setVisibility(View.GONE);
         } else {
@@ -237,16 +223,16 @@ public class ShoppingCartFragment extends BaseFragment {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "支付成功", Toast.LENGTH_SHORT).show();
                     } else {
                         // 判断resultStatus 为非"9000"则代表可能支付失败
                         // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                         if (TextUtils.equals(resultStatus, "8000")) {
-                            Toast.makeText(mContext, "支付结果确认中", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "支付结果确认中", Toast.LENGTH_SHORT).show();
 
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "支付失败", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -265,7 +251,7 @@ public class ShoppingCartFragment extends BaseFragment {
      */
     public void pay(View v) {
         if (TextUtils.isEmpty(PARTNER) || TextUtils.isEmpty(RSA_PRIVATE) || TextUtils.isEmpty(SELLER)) {
-            new AlertDialog.Builder(mContext).setTitle("警告").setMessage("需要配置PARTNER | RSA_PRIVATE| SELLER")
+            new AlertDialog.Builder(getContext()).setTitle("警告").setMessage("需要配置PARTNER | RSA_PRIVATE| SELLER")
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialoginterface, int i) {
                             //
@@ -299,7 +285,7 @@ public class ShoppingCartFragment extends BaseFragment {
             @Override
             public void run() {
                 // 构造PayTask 对象
-                PayTask alipay = new PayTask((Activity) mContext);
+                PayTask alipay = new PayTask((Activity) getContext());
                 // 调用支付接口，获取支付结果
                 String result = alipay.pay(payInfo, true);
 
@@ -401,5 +387,19 @@ public class ShoppingCartFragment extends BaseFragment {
     }
 
 
+    @Override
+    public int getResId() {
+        return R.layout.fragment_shoppingcart;
+    }
 
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+        findViews(binding.getRoot());
+
+        initListener();
+        tvShopcartEdit.setTag(ACTION_EDIT);
+        tvShopcartEdit.setText("编辑");
+        llCheckAll.setVisibility(View.VISIBLE);
+        showData();
+    }
 }

@@ -1,4 +1,4 @@
-package com.atguigu.shoppingmall.app;
+package com.aib.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;

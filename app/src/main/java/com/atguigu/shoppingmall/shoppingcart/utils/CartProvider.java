@@ -68,13 +68,6 @@ public class CartProvider {
     //本地获取json数据，并且通过Gson解析成list列表数据
     public List<GoodsBean> getDataFromLocal() {
         List<GoodsBean> carts = new ArrayList<>();
-        //从本地获取缓存数据
-        String savaJson = CacheUtils.getString(context, JSON_CART);
-        if (!TextUtils.isEmpty(savaJson)) {
-            //把数据转换成列表
-            carts = new Gson().fromJson(savaJson, new TypeToken<List<GoodsBean>>() {
-            }.getType());
-        }
         return carts;
 
     }
