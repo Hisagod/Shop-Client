@@ -1,20 +1,24 @@
-package com.atguigu.shoppingmall.type.fragment;
+package com.aib.view.fragment;
 
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.atguigu.shoppingmall.R;
-import com.atguigu.shoppingmall.base.BaseFragment;
+import com.atguigu.shoppingmall.databinding.FragmentTypeBinding;
+import com.atguigu.shoppingmall.type.fragment.ListFragment;
+import com.atguigu.shoppingmall.type.fragment.TagFragment;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeFragment extends BaseFragment {
+public class TypeFragment extends BaseFragment<FragmentTypeBinding> {
     private TabLayout segmentTabLayout;
     private ImageView iv_type_search;
     private FrameLayout fl_type;
@@ -24,46 +28,10 @@ public class TypeFragment extends BaseFragment {
     public TagFragment tagFragment;
 
     @Override
-    public View initView() {
-        View view = View.inflate(mContext, R.layout.fragment_type, null);
-        segmentTabLayout = view.findViewById(R.id.tl_1);
-        iv_type_search = (ImageView) view.findViewById(R.id.iv_type_search);
-        fl_type = (FrameLayout) view.findViewById(R.id.fl_type);
-
-        return view;
-
-    }
-
-    @Override
-    public void initData() {
-        super.initData();
-
-        initFragment();
-
-        String[] titles = {"分类", "标签"};
-
-        //BY HLP
-//        segmentTabLayout.setTabData(titles);
-//
-//        segmentTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
-//            @Override
-//            public void onTabSelect(int position) {
-//                switchFragment(tempFragment, fragmentList.get(position));
-//            }
-//
-//            @Override
-//            public void onTabReselect(int position) {
-//
-//            }
-//        });
-
-    }
-
-
-    @Override
     public void onResume() {
         super.onResume();
-        switchFragment(tempFragment, fragmentList.get(0));
+//        HLP
+//        switchFragment(tempFragment, fragmentList.get(0));
     }
 
     public void switchFragment(Fragment fromFragment, BaseFragment nextFragment) {
@@ -95,11 +63,42 @@ public class TypeFragment extends BaseFragment {
         listFragment = new ListFragment();
         tagFragment = new TagFragment();
 
-        fragmentList.add(listFragment);
-        fragmentList.add(tagFragment);
+//        fragmentList.add(listFragment);
+//        fragmentList.add(tagFragment);
 
-        switchFragment(tempFragment, fragmentList.get(0));
+//        switchFragment(tempFragment, fragmentList.get(0));
     }
 
 
+    @Override
+    public int getResId() {
+        return R.layout.fragment_type;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+        segmentTabLayout = binding.getRoot().findViewById(R.id.tl_1);
+        iv_type_search = (ImageView) binding.getRoot().findViewById(R.id.iv_type_search);
+        fl_type = (FrameLayout) binding.getRoot().findViewById(R.id.fl_type);
+
+        initFragment();
+
+        String[] titles = {"分类", "标签"};
+
+        //BY HLP
+//        segmentTabLayout.setTabData(titles);
+//
+//        segmentTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+//            @Override
+//            public void onTabSelect(int position) {
+//                switchFragment(tempFragment, fragmentList.get(position));
+//            }
+//
+//            @Override
+//            public void onTabReselect(int position) {
+//
+//            }
+//        });
+
+    }
 }

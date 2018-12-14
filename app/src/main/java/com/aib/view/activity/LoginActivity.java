@@ -2,6 +2,7 @@ package com.aib.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -10,38 +11,32 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.aib.viewmodel.LoginViewModel;
 import com.atguigu.shoppingmall.R;
+import com.atguigu.shoppingmall.databinding.ActivityLoginBinding;
+import com.blankj.utilcode.util.ActivityUtils;
 
-public class LoginActivity extends Activity implements View.OnClickListener {
+import org.jetbrains.annotations.Nullable;
+
+import javax.inject.Inject;
+
+public class LoginActivity extends BaseActivity<ActivityLoginBinding> implements View.OnClickListener {
     private ImageButton ibLoginBack;
-    private EditText etLoginPhone;
     private EditText etLoginPwd;
     private ImageButton ibLoginVisible;
     private Button btnLogin;
-    private TextView tvLoginRegister;
-    private TextView tvLoginForgetPwd;
     private ImageButton ib_weibo;
     private ImageButton ib_qq;
     private ImageButton ib_wechat;
-
     private int count;
-    private String screen_name;
-    private String profile_image_url;
+    @Inject
+    LoginViewModel vm;
 
-    /**
-     * Find the Views in the layout<br />
-     * <br />
-     * Auto-created on 2016-10-12 21:26:53 by Android Layout Finder
-     * (http://www.buzzingandroid.com/tools/android-layout-finder)
-     */
     private void findViews() {
         ibLoginBack = (ImageButton) findViewById(R.id.ib_login_back);
-        etLoginPhone = (EditText) findViewById(R.id.et_login_phone);
         etLoginPwd = (EditText) findViewById(R.id.et_login_pwd);
         ibLoginVisible = (ImageButton) findViewById(R.id.ib_login_visible);
         btnLogin = (Button) findViewById(R.id.btn_login);
-        tvLoginRegister = (TextView) findViewById(R.id.tv_login_register);
-        tvLoginForgetPwd = (TextView) findViewById(R.id.tv_login_forget_pwd);
         ib_weibo = (ImageButton) findViewById(R.id.ib_weibo);
         ib_qq = (ImageButton) findViewById(R.id.ib_qq);
         ib_wechat = (ImageButton) findViewById(R.id.ib_wechat);
@@ -54,12 +49,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         ib_wechat.setOnClickListener(this);
     }
 
-    /**
-     * Handle button click events<br />
-     * <br />
-     * Auto-created on 2016-10-12 21:26:53 by Android Layout Finder
-     * (http://www.buzzingandroid.com/tools/android-layout-finder)
-     */
+
     @Override
     public void onClick(View v) {
         if (v == ibLoginBack) {
@@ -75,34 +65,26 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 etLoginPwd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
             }
-        } else if (v == btnLogin) {
-
-        } else if (v == ib_weibo) {
-//            mShareAPI = UMShareAPI.get(this);
-//            mShareAPI.doOauthVerify(this, SHARE_MEDIA.SINA, umAuthListener);
-        } else if (v == ib_qq) {
-//            mShareAPI = UMShareAPI.get(this);
-//            mShareAPI.doOauthVerify(this, SHARE_MEDIA.QQ, umAuthListener);
-        } else if (v == ib_wechat) {
-//            mShareAPI = UMShareAPI.get(this);
-//            mShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, umAuthListener);
         }
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        findViews();
-
-
+    public int getResId() {
+        return R.layout.activity_login;
     }
-
-
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void initData(@Nullable Bundle savedInstanceState) {
+        findViews();
+
     }
 
+    /**
+     * 进入注册页面
+     *
+     * @param view
+     */
+    public void register(View view) {
+        ActivityUtils.startActivity(RegisterActivity.class);
+    }
 }

@@ -1,4 +1,4 @@
-package com.atguigu.shoppingmall.community.fragment;
+package com.aib.view.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
